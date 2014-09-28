@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- URL base to find .delta files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
+    <string name="url_base_delta">http://builds.hubdroid.com/omnirom/delta/%s/</string>
+
+    <!-- URL base to find .update and .sign files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
+    <string name="url_base_update">http://builds.hubdroid.com/omnirom/delta/%s/</string>
+
+    <!-- URL base to find the full zip files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
+    <string name="url_base_full">http://builds.hubdroid.com/omnirom/builds/%s/</string>
+
+    <!-- Applies whole-file signature delta. Adds one extra delta step. Required if recovery verifies signatures -->
+    <item type="bool" name="apply_signature">false</item>
+
+    <!-- (TWRP) Set this to false if the keys below aren't your ROM's -->
+    <item type="bool" name="inject_signature_enable">false</item>
+
+    <!-- (TWRP) Verification signatures to inject. Produced by 'dumpkey.jar' (out/host) of the platform.x509 key used to sign the ZIP file -->
+    <string name="inject_signature_keys"></string>
+
+    <!-- (TWRP) Add secure mode setting. Requires 'apply_signature' and 'inject_signature_enable'. Limits flashing to TWRP only, verifies ZIP signature in TWRP, disables auto-flashing of additional ZIPs -->
+    <item type="bool" name="secure_mode_enable">false</item>
+
+    <!-- (TWRP) Requires 'secure_mode_enable'. Decides whether the default setting for secure mode is enabled (true) or disabled (false) -->
+    <item type="bool" name="secure_mode_default">false</item>
+
+    <!--
+        Devices (detected using property_device) which may crash while downloading/patching/verifying when the screen is off.
+        This appears to be an issue with the fuse daemon, but the cause has not yet been found or fixed. Until the issue is
+        repaired, this is a stop-gap solution.
+    -->
+    <string-array name="keep_screen_on_devices">
+        <item>kumquat</item>
+        <item>pepper</item>
+        <item>nypon</item>
+        <item>lotus</item>
+    </string-array>
+
+    <string name="about_content"><![CDATA[
+        Thanks to <b>HubDroid</b> for providing a build server, and for hosting the OpenDelta build system.<br>
+        <br>
+        Copyright &copy; _COPYRIGHT_OPENDELTA_ <b>Jorrit \'Chainfire\' Jongma</b><br>
+        <br>
+        Originally created for <b>The OmniROM Project</b><br>
+        <br>
+        Licensed under the terms of the <b>GNU General Public License, version 3.0 (GPLv3)</b><br>
+        <br>
+        Delta decoding based on <b>xdelta</b>, copyright &copy; _COPYRIGHT_XDELTA_ <b>Joshua MacDonald</b><br>
+    ]]></string>
+</resources>
