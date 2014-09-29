@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Property to read for ROM version -->
+    <string name="property_version">ro.delta.version</string>
+    
     <!-- URL base to find .delta files, %s is expanded to property_device value. Path is suffixed by (expanded) filename_base -->
     <string name="url_base_delta">http://builds.hubdroid.com/omnirom/delta/%s/</string>
 
