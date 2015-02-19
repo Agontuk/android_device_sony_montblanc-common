@@ -5,7 +5,7 @@ BOOTREC_DEVICE := device/sony/$(TARGET_DEVICE)/config/bootrec-device
 BOOTREC_LED := device/sony/$(TARGET_DEVICE)/config/bootrec-led
 
 INSTALLED_BOOTIMAGE_TARGET := $(PRODUCT_OUT)/boot.img
-$(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTALLED_RAMDISK_TARGET) $(PRODUCT_OUT)/utilities/busybox $(MKBOOTIMG) $(MINIGZIP) $(INTERNAL_BOOTIMAGE_FILES)
+$(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTALLED_RAMDISK_TARGET) $(PRODUCT_OUT)/utilities/initbox $(MKBOOTIMG) $(MINIGZIP) $(INTERNAL_BOOTIMAGE_FILES)
 	$(call pretty,"Boot image: $@")
 
 	$(hide) rm -rf $(PRODUCT_OUT)/combinedroot
@@ -14,7 +14,7 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(recovery_ramdisk) $(INSTA
 	$(hide) cp $(INITSH) $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) chmod 755 $(PRODUCT_OUT)/combinedroot/sbin/init.sh
 	$(hide) ln -s sbin/init.sh $(PRODUCT_OUT)/combinedroot/init
-	$(hide) cp $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/combinedroot/sbin/
+	$(hide) cp $(PRODUCT_OUT)/utilities/initbox $(PRODUCT_OUT)/combinedroot/sbin/busybox
 	$(hide) cp $(BOOTREC_DEVICE) $(PRODUCT_OUT)/combinedroot/sbin/
 	$(hide) cp $(BOOTREC_LED) $(PRODUCT_OUT)/combinedroot/sbin/
 
