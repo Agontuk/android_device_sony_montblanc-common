@@ -61,5 +61,10 @@ busybox date >>boot.txt
 # -u should be used to replace the static busybox with dynamically linked one.
 busybox cpio -ui < ${load_image}
 
+# we use a very tiny busybox
+if [ "${load_image}" != "/sbin/ramdisk-recovery.cpio" ]; then
+	busybox rm /sbin/busybox
+fi
+
 export PATH="${_PATH}"
 exec /init
