@@ -195,6 +195,7 @@ on boot
     write /sys/class/android_usb/android0/bDeviceClass 0
     write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
     write /sys/class/android_usb/android0/iProduct ${ro.product.model}
+    copy /sys/devices/platform/ab8500-i2c.0/ab8500-usb.0/boot_time_device /sys/devices/platform/ab8500-i2c.0/ab8500-usb.0/boot_time_device
 
     # Permissions for Liblights.
     chown system system /sys/class/leds/lcd-backlight/brightness
@@ -514,10 +515,6 @@ service hw_config /system/bin/sh /system/etc/hw_config.sh
     class main
     user root
     oneshot
-    
-service usbid_init /system/bin/usbid_init.sh
-    class main
-    oneshot    
 
 # Start suntrold
 service suntrold /system/bin/suntrold
