@@ -147,12 +147,6 @@ on post-fs-data
     # create basic filesystem structure
     mkdir /data/misc/hcid 0770 bluetooth bluetooth
     mkdir /data/misc/psdata
-
-    # give system access to ril_config
-    copy -u /system/etc/ril_config /data/misc/ril_config
-    chmod 0660 /data/misc/ril_config
-    chown root radio /data/misc/ril_config
-
     mkdir /data/misc/telephony_log_levels
     chmod 0660 /data/misc/telephony_log_levels
     chown root radio /data/misc/telephony_log_levels
@@ -182,6 +176,10 @@ on early-boot
     # STE: Launch core services in case charging mode is entered
     start watchdog-kicker
 
+    # init Phonet and shrm net device required for Phonet communication with Modem
+    ifup shrm0
+    ifup upnlink0
+
     # STE: Prepare modem
     class_start modem-u8500
     class_start modem-core
@@ -195,6 +193,7 @@ on boot
     write /sys/class/android_usb/android0/bDeviceClass 0
     write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
     write /sys/class/android_usb/android0/iProduct ${ro.product.model}
+    copy /sys/devices/platform/ab8500-i2c.0/ab8500-usb.0/boot_time_device /sys/devices/platform/ab8500-i2c.0/ab8500-usb.0/boot_time_device
 
     # Permissions for Liblights.
     chown system system /sys/class/leds/lcd-backlight/brightness
@@ -333,16 +332,6 @@ on boot
 
     # STE: Enable wide-band speech for Bluetooth
     setprop bt.hfp.wideband 1
-
-# init shrm net device required for Phonet communication with Modem
-service shrm-netdev /system/bin/ifconfig shrm0 up
-    class modem-u8500
-    oneshot
-
-# init Phonet net device required for Phonet communication with Modem
-service phonet-netdev /system/bin/ifconfig upnlink0 up
-    class main
-    oneshot
 
 #STE: Start the Modem Storage Agent (MSA) service
 service modem /system/bin/sh /system/etc/ste_modem.sh
@@ -514,10 +503,6 @@ service hw_config /system/bin/sh /system/etc/hw_config.sh
     class main
     user root
     oneshot
-    
-service usbid_init /system/bin/usbid_init.sh
-    class main
-    oneshot    
 
 # Start suntrold
 service suntrold /system/bin/suntrold
